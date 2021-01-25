@@ -1,8 +1,8 @@
-package com.baharudin.runningapp
+package com.baharudin.runningapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import com.baharudin.runningapp.R
 import com.baharudin.runningapp.db.RunDAO
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -14,8 +14,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        Log.d("runDao","RUNDAO : ${runDao.hashCode()}")
 
     }
 }
