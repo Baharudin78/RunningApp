@@ -1,19 +1,45 @@
 package com.baharudin.runningapp.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.baharudin.runningapp.R
-import com.baharudin.runningapp.db.RunDAO
+import com.baharudin.runningapp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    @Inject
-    lateinit var runDao : RunDAO
+
+    lateinit var binding : ActivityMainBinding
+    lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val navigationController = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+        navigationController.findNavController().addOnDestinationChangedListener { _, destination, _ ->
+            when(destination.id){
+                R.id.settingFragment, R.id.statisticFragment, R.id.runFragment ->
+                    binding.bottomNavigationView.visibility = View.VISIBLE
+                else -> binding.bottomNavigationView.visibility = View.GONE
+            }
+        }
+        navController = navigationController.findNavController()
+
+
+
+        binding.apply {
+            bottomNavigationView.setupWithNavController(navController)
+        }
+
+
+
 
     }
 }
